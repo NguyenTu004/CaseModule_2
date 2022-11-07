@@ -12,21 +12,21 @@ public class ManagerDisplay {
     private final double FIFTY_THOUSAND = 50000;
     private final ManagerCRUD managerCRUD = new ManagerCRUD();
     private final FileIO<Materials> fileMaterials = new FileIO<>();
-    private final String PATH_MATERIALS = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\materialData.txt";
-    private final String PATH_BILL = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\billData.txt";
+    private static final String PATH_MATERIALS ;
+    private static final String PATH_BILL ;
     private List<Materials> listMaterials ;
     private final ManagerSystem managerSystem = new ManagerSystem();
     private final FileIO<User> fileUser = new FileIO<>();
     private  List<User> listBill = new ArrayList<>();
+    static {
+        PATH_MATERIALS = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\materialData.txt";
+        PATH_BILL = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\billData.txt";
+    }
     public ManagerDisplay() {
     }
     private void readFile(){
-        try {
-            listMaterials = fileMaterials.readFile(PATH_MATERIALS);
-            listBill = fileUser.readFile(PATH_BILL);
-        }catch (Exception e) {
-            System.out.println();
-        }
+        listMaterials = fileMaterials.readFile(PATH_MATERIALS);
+        listBill = fileUser.readFile(PATH_BILL);
     }
     public void displayByPriceLessOneHundredThousand( ){
         readFile();
