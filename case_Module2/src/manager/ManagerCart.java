@@ -18,26 +18,19 @@ public class ManagerCart {
     private final FileIO<User> fileUser = new FileIO<>();
     private final String PATH_BILL = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\billData.txt";
     private final String PATH_MATERIALS = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\materialData.txt";
+    private final String PATH_USER ;
     private final FileIO<Materials> fileMaterials = new FileIO<>();
     private List<Materials> listMaterials ;
     private final ManagerSystem managerSystem = new ManagerSystem();
     private List<User> listUsers = new ArrayList<>();
     public ManagerCart() {
-        try {
-            listMaterials = fileMaterials.readFile(PATH_MATERIALS);
-        }catch (RuntimeException e){
-            System.out.println();
-        }
+        listMaterials = fileMaterials.readFile(PATH_MATERIALS);
+        PATH_USER = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\userData.txt";
     }
     private void readFile(){
-        try {
-            listMaterials = fileMaterials.readFile(PATH_MATERIALS);
-            listBill = fileUser.readFile(PATH_BILL);
-            String PATH_USER = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\userData.txt";
-            listUsers = fileUser.readFile(PATH_USER);
-        }catch (Exception e) {
-            System.out.println();
-        }
+        listMaterials = fileMaterials.readFile(PATH_MATERIALS);
+        listBill = fileUser.readFile(PATH_BILL);
+        listUsers = fileUser.readFile(PATH_USER);
     }
     public void addCart(Scanner scanner){
         readFile();
@@ -177,7 +170,7 @@ public class ManagerCart {
                         String information = informationUser();
                         listBill.add(new User(listUsers.get(index).getUsername(), listUsers.get(index).getNumPhone(),
                                 address, information, sumMoneyCart, date));
-                        updateQuantity();
+                        updateQuantityMaterial();
                         fileMaterials.writeFile(listMaterials, PATH_MATERIALS);
                         fileUser.writeFile(listBill, PATH_BILL);
                         System.out.println("Đặt hàng thành công!!!");
@@ -193,7 +186,7 @@ public class ManagerCart {
             } while (true);
         }else{System.out.println("Danh sách không có sản phẩm nào!");}
     }
-    private void updateQuantity(){
+    private void updateQuantityMaterial(){
         for (String id : keyId) {
             double num = listCart.get(mapId.get(id));
             int index = managerCRUD.checkId(id);

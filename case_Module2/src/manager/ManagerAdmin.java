@@ -12,17 +12,16 @@ public class ManagerAdmin {
     private List<Materials> listMaterials;
     private final FileIO<User> fileUsers = new FileIO<>();
     private final FileIO<Materials> fileMaterials = new FileIO<>();
-    private final String OUT_OF_DATE = "Out of date";
-    private final String GOOD = "Good";
-    private final String OUT_OF_STOCK = "Out of stock";
+    private final String OUT_OF_DATE ;
+    private final String GOOD ;
+    private final String OUT_OF_STOCK ;
 
     public ManagerAdmin() {
-        try {
-            listBill = fileUsers.readFile(PATH_BILL);
-            listMaterials = fileMaterials.readFile(PATH_MATERIALS);
-        }catch (RuntimeException e){
-            System.out.println();
-        }
+        OUT_OF_DATE = "Out of date";
+        GOOD = "Good";
+        OUT_OF_STOCK = "Out of stock";
+        listBill = fileUsers.readFile(PATH_BILL);
+        listMaterials = fileMaterials.readFile(PATH_MATERIALS);
     }
 
     private void readFile() {
@@ -62,12 +61,14 @@ public class ManagerAdmin {
         LocalDate date = LocalDate.now();
         String status ;
         double sumAll =0;
+        double sumOutDate =0;
         System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%-20s%-20s%s", "ID", "Tên", "Giá",
                 "Số lượng", "Xuất xứ", "Ngày sản xuất", "Ngày hết hạn", "Trạng thái", "Tổng giá\n");
         for (Materials materials : listMaterials) {
             Period period = Period.between(date, materials.getExpiryDate());
             if (period.getDays() < 0) {
                 status = OUT_OF_DATE;
+                sumOutDate += materials.getMoney();
             } else {
                 status = GOOD;
                 if (materials.getQuantity() <= 0) {
@@ -81,8 +82,10 @@ public class ManagerAdmin {
                     materials.getExpiryDate(), status, materials.getMoney() + "\n");
         }
         double sumBill = sumBill();
-        System.out.printf("%-10s%s","Tổng tiền hàng trong kho: ",sumAll+" VND\n");
-        System.out.printf("%-10s%s","Tổng tiền hàng đã giao: ",sumBill+" VND\n");
-        System.out.printf("%-10s%s","Tổng tiền hàng : ",(sumAll+sumBill)+" VND\n");
+        System.out.printf("%-37s%s","Tổng tiền hàng trong kho: ",sumAll+" VND\n");
+        System.out.printf("%-37s%s","Tổng tiền hàng đã giao: ",sumBill+" VND\n");
+        System.out.printf("%-37s%s","Tổng tiền hàng hết hạn: ",sumOutDate+" VND\n");
+        System.out.printf("%-10s%s","Tổng tiền hàng trong kho và đã giao: ",(sumAll+sumBill)+" VND\n");
+        System.out.printf("%-37s%s","Tổng tiền hàng: ",(sumAll+sumBill+sumOutDate)+" VND\n");
     }
 }
