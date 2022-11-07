@@ -83,8 +83,8 @@ public abstract class Materials implements Serializable {
                 '}';
     }
     public String display(){
-        return " ID= '" + id + '\'' +
-                ", '" + name + '\'' +
+        return " ID= " + id +
+                ", " + name +
                 ", " + price +
                 ", " + origin.getName();
     }

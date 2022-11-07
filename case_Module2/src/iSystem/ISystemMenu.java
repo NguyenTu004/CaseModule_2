@@ -48,30 +48,31 @@ public class ISystemMenu {
         }while (true);
     }
 
-    private void admin(Scanner scanner) throws InterruptedException {
-        int choice;
-        try {
-            do {
+    private void admin(Scanner scanner){
+        int choice=-1;
+        do {
+            try {
                 System.out.println("MENU");
                 System.out.println("1.Hiển thị tất cả sản phẩm: ");
                 System.out.println("2.Hiển thị tất cả sản phẩm theo xuất xứ: ");
-                System.out.println("3.Thêm sản phẩm: ");
-                System.out.println("4.Sửa sản phẩm: ");
-                System.out.println("5.Xóa sản phẩm: ");
-                System.out.println("6.Thông tin tổng quát sản phẩm: ");
-                System.out.println("7.Lịch sử hóa đơn: ");
+                System.out.println("3.Hiển thị tất cả sản phẩm theo loại: ");
+                System.out.println("4.Thêm sản phẩm: ");
+                System.out.println("5.Sửa sản phẩm: ");
+                System.out.println("6.Xóa sản phẩm: ");
+                System.out.println("7.Thông tin tổng quát sản phẩm: ");
+                System.out.println("8.Lịch sử hóa đơn: ");
                 System.out.println("0.Đăng xuất Admin: ");
                 System.out.println("Lựa chọn của bạn: ");
                 choice = Integer.parseInt(scanner.nextLine());
-                if (choice >= 0 && choice <= 7) {
+                if (choice >= 0 && choice <= 8) {
                     systemAdmin(scanner, choice);
                 } else {
                     System.err.println("Nhập sai mời bạn nhập lại");
                 }
-            } while (choice != 0);
-        }catch (Exception e){
-            System.err.println("Nhập sai dữ liệu!!");
-        }
+            } catch (Exception e) {
+                System.err.println("Nhập sai dữ liệu!!");
+            }
+        }while (choice != 0);
     }
 
     private void systemAdmin(Scanner scanner, int choice) throws InterruptedException {
@@ -79,21 +80,28 @@ public class ISystemMenu {
             case 1:
                 managerCRUD.displayMaterials();
                 break;
-            case 2:
-                managerDisplay.displayByOrigin(scanner);
+            case 2:String numOrigin;do{
+                    numOrigin = managerDisplay.displayByOrigin(scanner);
+                    if (numOrigin.equals("0"))break;
+                    }while (true);
                 break;
-            case 3:
-                managerCRUD.addMaterial(scanner);
+            case 3:int numAliment;do{
+                    numAliment = managerDisplay.displayByAliment(scanner);
+                    if (numAliment==0)break;
+                    }while (true);
                 break;
             case 4:
-                managerCRUD.updateMaterial(scanner);
+                managerCRUD.addMaterial(scanner);
                 break;
             case 5:
+                managerCRUD.updateMaterial(scanner);
+                break;
+            case 6:
                 managerCRUD.deleteMaterial(scanner);
                 break;
-            case 6:managerAdmin.displayInformation();Thread.sleep(10);break;
-            case 7:managerAdmin.displayBill();Thread.sleep(10);break;
-            case 8:managerSystem.outAdmin(scanner);break;
+            case 7:managerAdmin.displayInformation();Thread.sleep(10);break;
+            case 8:managerAdmin.displayBill();Thread.sleep(10);break;
+            case 0:managerSystem.outAdmin(scanner);break;
         }
     }
 
@@ -103,16 +111,17 @@ public class ISystemMenu {
             try {
                 System.out.println("MENU");
                 System.out.println("1.Tìm kiếm: ");
-                System.out.println("2.Sản phẩm ưu tiên: ");
+                System.out.println("2.Sản phẩm đề xuất ưu tiên: ");
                 System.out.println("3.Hiển thị tất cả sản phẩm theo xuất xứ: ");
                 System.out.println("4.Hiển thị tất cả sản phẩm theo giá: ");
                 System.out.println("5.Hiển thị tất cả sản phẩm theo loại: ");
                 System.out.println("6.Giỏ hàng: ");
                 System.out.println("7.Lịch sử thanh toán: ");
-                System.out.println("0.Thoát!!!");
+                System.out.println("0.Đăng xuất!!!");
                 System.out.println("Lựa chọn của bạn: ");
                 choice = Integer.parseInt(scanner.nextLine());
                 if (choice == 0){
+                    managerSystem.outAdmin(scanner);
                     break;
                 }
                 if (choice >0 && choice <=7) {
@@ -122,14 +131,17 @@ public class ISystemMenu {
         }while (true);
     }
 
-    private void systemUser(Scanner scanner, int choice) throws InterruptedException {
+    private void systemUser(Scanner scanner, int choice) {
         switch (choice) {
             case 2: managerDisplay.displayRandom();managerCart.addCart(scanner);break;
             case 3:String numOrigin;
-                do{
-                    numOrigin = managerDisplay.displayByOrigin(scanner);;
-                    if (numOrigin.equals("0"))break;
+                do{try {
+                    numOrigin = managerDisplay.displayByOrigin(scanner);
+                    if (numOrigin.equals("0")) break;
                     managerCart.addCart(scanner);
+                }catch(NullPointerException e){
+                    System.out.println();
+                }
                 }while (true);
                 break;
             case 4:int numPrice;do{
@@ -201,13 +213,13 @@ public class ISystemMenu {
                 if (choice > 0){
                     switch (choice) {
                         case 1:
-                            managerDisplay.displayByPriceLessFiftyThousand(scanner);
+                            managerDisplay.displayByPriceLessFiftyThousand();
                             break;
                         case 2:
-                            managerDisplay.displayByPriceLessOneHundredThousand(scanner);
+                            managerDisplay.displayByPriceLessOneHundredThousand();
                             break;
                         case 3:
-                            managerDisplay.displayByPriceGreatOneHundredThousand(scanner);
+                            managerDisplay.displayByPriceGreatOneHundredThousand();
                             break;
                     }
                 }

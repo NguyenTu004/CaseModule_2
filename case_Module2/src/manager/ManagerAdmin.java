@@ -34,13 +34,13 @@ public class ManagerAdmin {
         }
     }
 
-    public void displayBill() throws InterruptedException {
+    public void displayBill()   {
         readFile();
         double sumMoneyBill =0;
         System.out.printf("%-10s%-10s%-20s%-20s%-20s%-20s%s","STT","Tên","Số Điện Thoại","Địa Chỉ","Tổng tiền","Ngày mua",
                 "Thông Tin Sản Phẩm\n");
         for (int i = 0; i < listBill.size(); i++) {
-            System.out.printf("%-10s%-10s%-20s%-20s%-20s%-20s%s",(i+1),listBill.get(i).getUsername(),
+            System.out.printf("%-10s%-10s%-20s%-20s6%-20s%-20s%s",(i+1),listBill.get(i).getUsername(),
                     listBill.get(i).getNumPhone(),listBill.get(i).getAddress(),listBill.get(i).getSumMoney(),listBill.get(i).getBuyDate(),
                     listBill.get(i).getInformation()+"\n");
             sumMoneyBill += listBill.get(i).getSumMoney();
@@ -60,7 +60,7 @@ public class ManagerAdmin {
         CollectionSort sort = new CollectionSort();
         listMaterials.sort(sort);
         LocalDate date = LocalDate.now();
-        String status;
+        String status ;
         double sumAll =0;
         System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%-20s%-20s%s", "ID", "Tên", "Giá",
                 "Số lượng", "Xuất xứ", "Ngày sản xuất", "Ngày hết hạn", "Trạng thái", "Tổng giá\n");
@@ -76,13 +76,13 @@ public class ManagerAdmin {
                     sumAll += materials.getMoney();
                 }
             }
-            System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%-20s%-20s%s", materials.getId(), materials.getName(),
+            System.out.printf("%-10s%-20s%-20.0f%-20.0f%-20s%-20s%-20s%-20s%s", materials.getId(), materials.getName(),
                     materials.getPrice(), materials.getQuantity(), materials.getOrigin(), materials.getManufacturingDate(),
                     materials.getExpiryDate(), status, materials.getMoney() + "\n");
         }
         double sumBill = sumBill();
-        System.err.printf("%-10s%s","Tổng tiền hàng trong kho: ",sumAll+" VND\n");
-        System.err.printf("%-10s%s","Tổng tiền hàng đã giao: ",sumBill+" VND\n");
-        System.err.printf("%-10s%s","Tổng tiền hàng : ",(sumAll+sumBill)+" VND\n");
+        System.out.printf("%-10s%s","Tổng tiền hàng trong kho: ",sumAll+" VND\n");
+        System.out.printf("%-10s%s","Tổng tiền hàng đã giao: ",sumBill+" VND\n");
+        System.out.printf("%-10s%s","Tổng tiền hàng : ",(sumAll+sumBill)+" VND\n");
     }
 }

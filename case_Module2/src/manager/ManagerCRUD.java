@@ -60,13 +60,13 @@ public class ManagerCRUD {
                         fileMaterials.writeFile(listMaterials,PATH_MATERIALS);
                         System.out.println("Tạo thành công!!");
                     }else {
-                        System.err.println("ID Sản Phẩm Đã Tồn Tại!");
+                        System.out.println("ID Sản Phẩm Đã Tồn Tại!");
                     }
                 }else {
-                    System.err.println("Nhập sai mời nhập lại!!");
+                    System.out.println("Nhập sai mời nhập lại!!");
                 }
             }catch (Exception e){
-                System.err.println("Nhập sai mời nhập lại!!");
+                System.out.println("Nhập sai mời nhập lại!!");
             }
         }while (true);
     }
@@ -118,7 +118,7 @@ public class ManagerCRUD {
             if (id.equals("0")){break;}
             int index = checkId(id);
             if (index == -1) {
-                System.err.println("Nhập sai id!!!");
+                System.out.println("Nhập sai id!!!");
                 break;
             }
             displayById(index);
@@ -142,7 +142,7 @@ public class ManagerCRUD {
             if (id.equals("0")){break;}
             int index = checkId(id);
             if (index == -1) {
-                System.err.println("Nhập sai id!!!");
+                System.out.println("Nhập sai id!!!");
                 break;
             }
             displayById(index);
@@ -198,16 +198,30 @@ public class ManagerCRUD {
         }
     }
     public Origin updateOrigin(Scanner scanner) {
-        System.out.println("1.Xuất xứ: "+listOrigin.get(0));
-        System.out.println("2.Xuất xứ: "+listOrigin.get(1));
-        System.out.println("3.Xuất xứ: "+listOrigin.get(2));
         Origin category = new Origin();
-        int choice = Integer.parseInt(scanner.nextLine());
-        switch (choice) {
-            case 1: category = listOrigin.get(0);break;
-            case 2: category = listOrigin.get(1);break;
-            case 3: category = listOrigin.get(2);break;
-            case 0: category = listOrigin.get(3);break;
+        try {
+            System.out.println("1.Xuất xứ: " + listOrigin.get(0));
+            System.out.println("2.Xuất xứ: " + listOrigin.get(1));
+            System.out.println("3.Xuất xứ: " + listOrigin.get(2));
+            int choice = Integer.parseInt(scanner.nextLine());
+            if (choice  >=0 && choice <=3) {
+                switch (choice) {
+                    case 1:
+                        category = listOrigin.get(0);
+                        break;
+                    case 2:
+                        category = listOrigin.get(1);
+                        break;
+                    case 3:
+                        category = listOrigin.get(2);
+                        break;
+                    case 0:
+                        category = listOrigin.get(3);
+                        break;
+                }
+            }
+        }catch (Exception e){
+            System.out.println();
         }
         return category;
     }
@@ -221,14 +235,14 @@ public class ManagerCRUD {
                     int num = Integer.parseInt(text);
                     listMaterials.get(index).setPrice(num);break;
                 } catch (Exception e) {
-                    System.err.println("Nhap sai du lieu");
+                    System.out.println("Nhap sai du lieu");
                 }
                 break;
                 case 3: try {
                     int num = Integer.parseInt(text);
                     listMaterials.get(index).setQuantity(num);break;
                 } catch (Exception e) {
-                    System.err.println("Nhap sai du lieu");
+                    System.out.println("Nhap sai du lieu");
                 }
                     break;
             }

@@ -45,14 +45,14 @@ public class ManagerSystem {
             if (accountExists) {
                 num = checkUser( password);
                 if (num == -1){
-                    System.err.println("Đặng nhập thất bại!!");
-                    System.err.println("Bạn Kiểm Tra Lại Tài Khoản Hoặc Mật Khẩu!!");
+                    System.out.println("Đặng nhập thất bại!!");
+                    System.out.println("Bạn Kiểm Tra Lại Tài Khoản Hoặc Mật Khẩu!!");
                 }else {
                     isUser=2;
                     flag=false;
                 }
             }else {
-                System.err.println("Tài Khoản Không Tồn Tại!");
+                System.out.println("Tài Khoản Không Tồn Tại!");
                 System.out.println("0.Thoát");
                 choice = scanner.nextLine();
             }
@@ -62,8 +62,8 @@ public class ManagerSystem {
     }
     private boolean isAccount(String account){
         boolean flag = false;
-        for (int i = 0; i < listUsers.size(); i++) {
-            if (listUsers.get(i).getAccount().equals(account)){
+        for (User listUser : listUsers) {
+            if (listUser.getAccount().equals(account)) {
                 flag = true;
                 break;
             }
@@ -111,10 +111,10 @@ public class ManagerSystem {
                     fileUser.writeFile(listUsers, PATH_USER);
                     flag = false;
                 }else {
-                    System.err.println("Tài khoản đã tồn tại!!");
+                    System.out.println("Tài khoản đã tồn tại!!");
                 }
             } else {
-                System.err.println("Nhập sai số điện thoại hoặc số điện thoại đã tồn tại!!");
+                System.out.println("Nhập sai số điện thoại hoặc số điện thoại đã tồn tại!!");
             }
             checkUser( password);
         }while (flag);

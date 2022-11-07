@@ -14,25 +14,21 @@ public class ManagerDisplay {
     private final FileIO<Materials> fileMaterials = new FileIO<>();
     private final String PATH_MATERIALS = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\materialData.txt";
     private final String PATH_BILL = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\billData.txt";
-    private final String PATH_USER = "C:\\Users\\ASUS\\Desktop\\Máy tính\\Test_Java\\case_Module2\\src\\fileIO\\userData.txt";
     private List<Materials> listMaterials ;
     private final ManagerSystem managerSystem = new ManagerSystem();
     private final FileIO<User> fileUser = new FileIO<>();
     private  List<User> listBill = new ArrayList<>();
-    private  List<User> listUser = new ArrayList<>();
-    private final ManagerCart managerCart = new ManagerCart();
     public ManagerDisplay() {
     }
     private void readFile(){
         try {
             listMaterials = fileMaterials.readFile(PATH_MATERIALS);
             listBill = fileUser.readFile(PATH_BILL);
-            listUser = fileUser.readFile(PATH_USER);
         }catch (Exception e) {
             System.out.println();
         }
     }
-    public void displayByPriceLessOneHundredThousand(Scanner scanner){
+    public void displayByPriceLessOneHundredThousand( ){
         readFile();
         if(listMaterials.size() > 0){
             System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%s","ID","Tên","Giá","Số Lượng","Xuất Xứ","NSX",
@@ -48,7 +44,7 @@ public class ManagerDisplay {
             System.out.println("Danh sách không có sản phẩm nào!");
         }
     }
-    public void displayByPriceLessFiftyThousand(Scanner scanner){
+    public void displayByPriceLessFiftyThousand(){
         readFile();
         if(listMaterials.size() > 0){
             System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%s","ID","Tên","Giá","Số Lượng","Xuất Xứ","NSX",
@@ -64,7 +60,7 @@ public class ManagerDisplay {
             System.out.println("Danh sách không có sản phẩm nào!");
         }
     }
-    public void displayByPriceGreatOneHundredThousand(Scanner scanner){
+    public void displayByPriceGreatOneHundredThousand(){
         readFile();
         if(listMaterials.size() > 0){
             System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%s","ID","Tên","Giá","Số Lượng","Xuất Xứ","NSX",
@@ -103,7 +99,7 @@ public class ManagerDisplay {
                         }
                     }
             }catch (Exception e){
-                System.err.println("Nhập dữ liệu sai!!!");
+                System.out.println("Nhập dữ liệu sai!!!");
             }
         }else {
             System.out.println("Danh sách không có sản phẩm nào!");
@@ -115,7 +111,7 @@ public class ManagerDisplay {
         int choice=-1;
         if(listMaterials.size() > 0){
                 choice = managerCRUD.choiceAliment(scanner);
-                if (choice>0){
+                if (choice>0 && choice<=3){
                     System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%s", "ID", "Tên", "Giá", "Số Lượng", "Xuất Xứ", "NSX",
                             "HSD\n");
                     for (Materials listMaterial : listMaterials) {
@@ -133,19 +129,20 @@ public class ManagerDisplay {
                                     listMaterial.getManufacturingDate(), listMaterial.getExpiryDate() + "\n");
                         }
                     }
+                }else {
+                    System.out.println("Chọn Từ 1 Đến 3!!!!");
                 }
         }else {
             System.out.println("Danh sách không có sản phẩm nào!");
         }return choice;
     }
-    public void displayRandom() throws InterruptedException {
+    public void displayRandom(){
         readFile();
         int index;
         int size = listMaterials.size()-1;
         if(listMaterials.size() > 0){
             System.out.printf("%-10s%-20s%-20s%-20s%-20s%-20s%s","ID","Tên","Giá","Số Lượng","Xuất Xứ","NSX",
                     "HSD\n");
-            Thread.sleep(10);
             for (int i = 0; i < 5; i++) {
                 Random rand = new Random();
                 index = rand.nextInt(size);
@@ -154,7 +151,6 @@ public class ManagerDisplay {
                         listMaterials.get(index).getQuantity(),listMaterials.get(index).getOrigin(),
                         listMaterials.get(index).getManufacturingDate(),listMaterials.get(index).getExpiryDate()+"\n");
             }
-            Thread.sleep(20);
         }else {
             System.out.println("Danh sách không có sản phẩm nào!");
         }
@@ -165,14 +161,14 @@ public class ManagerDisplay {
         double sumBill = 0;
         int count = 1;
         String numPhone = managerSystem.numPhoneUser();
-        System.err.printf("%-10s%-10s%-20s%-20s%-20s%-20s%s","STT","Tên","Số Điện Thoại","Địa Chỉ","Tổng tiền","Ngày mua",
+        System.out.printf("%-10s%-10s%-20s%-20s%-20s%-20s%s","STT","Tên","Số Điện Thoại","Địa Chỉ","Tổng tiền","Ngày mua",
                 "Thông Tin Sản Phẩm\n");
         for (User user : listBill) {
             if (Objects.equals(user.getNumPhone(), numPhone)) {
                 System.out.printf("%-10s%-10s%-20s%-20s%-20s%-20s%s", count, user.getUsername(),
                         user.getNumPhone(), user.getAddress(), user.getSumMoney(),user.getBuyDate(),
                         user.getInformation() + "\n");
-                sumBill = user.getSumMoney();
+                sumBill += user.getSumMoney();
                 count++;
                 flag = false;
             }
@@ -197,6 +193,6 @@ public class ManagerDisplay {
                 count++;
             }
         }
-        if (count == 0) System.err.println("Sản Phẩm Không Tồn Tại!!");
+        if (count == 0) System.out.println("Sản Phẩm Không Tồn Tại!!");
     }
 }
