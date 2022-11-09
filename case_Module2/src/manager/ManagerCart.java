@@ -167,7 +167,7 @@ public class ManagerCart {
                     LocalDate date = LocalDate.now();
                     int choice = Integer.parseInt(scanner.nextLine());
                     if (choice == 1) {
-                        String information = informationUser();
+                        String information = informationMaterial();
                         listBill.add(new User(listUsers.get(index).getUsername(), listUsers.get(index).getNumPhone(),
                                 address, information, sumMoneyCart, date));
                         updateQuantityMaterial();
@@ -194,7 +194,7 @@ public class ManagerCart {
             listMaterials.get(index).setQuantity(quantity);
         }
     }
-    private String informationUser() {
+    private String informationMaterial() {
         int count = 0;
         int size = keySet.size();
         StringBuilder information = new StringBuilder();

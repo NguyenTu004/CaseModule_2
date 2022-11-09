@@ -72,8 +72,8 @@ public class ManagerCRUD {
     }
 
     private boolean checkIdExistence(String id) {
-        for (int i = 0; i < listMaterials.size(); i++) {
-            if (listMaterials.get(i).getId().equals(id)) {
+        for (Materials listMaterial : listMaterials) {
+            if (listMaterial.getId().equals(id)) {
                 return false;
             }
         }
